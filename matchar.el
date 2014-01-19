@@ -1,4 +1,4 @@
-;;; matchar.el --- Move cursor back and forth to characters with sequential input. Emacs Lisp -*- coding: utf-8; lexical-binding: t -*-
+;;; matchar.el --- Move cursor to a character repeatedly with sequential input. Emacs Lisp -*- coding: utf-8; lexical-binding: t -*-
 
 ;; Copyright (C) 2014 by Shingo Fukuyama
 
