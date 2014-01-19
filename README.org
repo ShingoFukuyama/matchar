@@ -1,8 +1,10 @@
 
 * What can do with Emacs matchar.el
-  Move cursor to a character repeatedly with sequential input.  
-  `M-x matchar-forward a a a b b f f ...`  
-  `M-x matchar-backward a a a b b f f ...`
+  Move cursor to a character repeatedly with sequential input.
+
+  `M-x matchar-forward a a a b b f f ...'
+
+  `M-x matchar-backward a a a b b f f ...'
 
 ** config
 #+BEGIN_SRC emacs-lisp
