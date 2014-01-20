@@ -103,7 +103,8 @@
                      (if (search-forward (char-to-string $c) nil t)
                          t
                        (message "no more char")
-                       nil))
+                       ;;nil ;; stop
+                       ))
               (unless mark-active (backward-char)))
           (error (message "search stop"))))
     (matchar-restore-face)))
@@ -130,7 +131,8 @@
                      (if (search-backward (char-to-string $c) nil t)
                          t
                        (message "no more char")
-                       nil)))
+                       ;;nil ;; stop
+                       )))
           (error (message "search stop"))))
     (matchar-restore-face)))
 
