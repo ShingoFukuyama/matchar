@@ -61,9 +61,7 @@
 ;;; temporary variable for restore ------------------------
 
 (defvar matchar-blink-cursor-default blink-cursor-mode)
-(defvar matchar-cursor-color-default (car (loop for ($k . $v) in (frame-parameters)
-                                                if (eq $k 'cursor-color)
-                                                collect $v)))
+(defvar matchar-cursor-color-default)
 (defcustom matchar-cursor-color "#ff6600"
   "Temporarily override the cursor color"
   :group 'matchar
@@ -71,7 +69,14 @@
 
 ;;; core ------------------------
 
-(defun matchar-restore-face ()
+(defun matchar--set-default-cursor-color ()
+  (unless (boundp 'matchar-cursor-color-default)
+    (set (make-local-variable 'matchar-cursor-color-default)
+         (car (loop for ($k . $v) in (frame-parameters)
+                    if (eq $k 'cursor-color)
+                    collect $v)))))
+
+(defun matchar--restore-face ()
   (if matchar-blink-cursor-default (blink-cursor-mode 1))
   (set-cursor-color matchar-cursor-color-default))
 
@@ -79,6 +84,7 @@
   (unwind-protect
       (progn
         (if matchar-blink-cursor-default (blink-cursor-mode 0))
+        (matchar--set-default-cursor-color)
         (set-cursor-color matchar-cursor-color)
         (re-search-forward "[^\s\t\n\r]" nil t)
         (backward-char)
@@ -107,12 +113,13 @@
                        ))
               (unless mark-active (backward-char)))
           (error (message "search stop"))))
-    (matchar-restore-face)))
+    (matchar--restore-face)))
 
 (defun* matchar-backward-1 ()
   (unwind-protect
       (progn
         (if matchar-blink-cursor-default (blink-cursor-mode 0))
+        (matchar--set-default-cursor-color)
         (set-cursor-color matchar-cursor-color)
         (re-search-backward "[^\s\t\n\r]" nil t)
         (forward-char)
@@ -134,7 +141,7 @@
                        ;;nil ;; stop
                        )))
           (error (message "search stop"))))
-    (matchar-restore-face)))
+    (matchar--restore-face)))
 
 ;;;###autoload
 (defun matchar-forward ()
